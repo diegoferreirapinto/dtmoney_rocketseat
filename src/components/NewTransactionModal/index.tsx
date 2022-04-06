@@ -1,5 +1,5 @@
 import Modal from 'react-modal';
-import { Container } from './style';
+import { Container, TransactionTypeContainer } from './styles';
 import depositImg from "../../assets/entradas.svg";
 import withdrawImg from "../../assets/saidas.svg";
 import closeImg from "../../assets/close.svg";
@@ -44,23 +44,24 @@ export function NewTransactionModal({ isOpen, onRequestClose }: NewTransactionMo
           placeholder="Value"
         />
 
-        <button className="deposit">
-          <img src={depositImg} />
-          Deposit
-        </button>
 
-
-        <button className="withdraw">
-          <img src={withdrawImg} />
-          Withdraw
-        </button>
+        <TransactionTypeContainer>
+          <button type="button">
+            <img src={depositImg} alt="Deposit" />
+            <span>Deposit</span>
+          </button>
+          <button type="button">
+            <img src={withdrawImg} alt="Withdraw" />
+            <span>Withdraw</span>
+          </button>
+        </TransactionTypeContainer>
 
         <input
           placeholder="Category"
         />
 
         <button type="submit">
-          Cadastrar
+          Register
         </button>
       </Container>
     </Modal>

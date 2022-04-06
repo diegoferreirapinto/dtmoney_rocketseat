@@ -14,7 +14,7 @@ export function Header({ handleOpenTransactionModal }: HeaderProps) {
       <Content>
         <img src={logoImg} alt="dtmoney" />
         <button type="button" onClick={handleOpenTransactionModal}>
-          Nova Transacão
+          New Transaction
         </button>
       </Content>
     </Container>
