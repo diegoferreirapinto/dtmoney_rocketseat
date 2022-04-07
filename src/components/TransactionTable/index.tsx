@@ -1,7 +1,16 @@
-import { useEffect } from "react"
+import { useEffect, useState } from "react"
 import { api } from "../../services/app"
 import { Container } from "./styles"
 
+
+interface Transaction {
+  id: number;
+  title: string;
+  amount: number;
+  type: string;
+  category: string;
+  createdAt: string;
+}
 
 export function TransactionTable() {
   /*
@@ -10,10 +19,14 @@ export function TransactionTable() {
       .then(data => console.log(data))
   })
   */
+
+  const [transactions, setTransactions] = useState<Transaction[]>([]);
+
   useEffect(() => {
     api.get('transactions')
-      .then(reponse => console.log(reponse.data))
-  })
+      .then(reponse => setTransactions(reponse.data.transactions))
+  }, []);
+
 
   return (
     <Container>
@@ -27,24 +40,27 @@ export function TransactionTable() {
           </tr>
         </thead>
         <tbody>
-          <tr>
-            <td >Website Development</td>
-            <td className="deposit">U$ 4.000,00</td>
-            <td>Development</td>
-            <td>03/18/2022</td>
-          </tr>
-          <tr>
-            <td>Website Maintenance</td>
-            <td className="deposit">U$ 1000,00</td>
-            <td>Support IT</td>
-            <td>10/18/2022</td>
-          </tr>
-          <tr>
-            <td>Website Design</td>
-            <td className="withdraw">- U$ 4.000,00</td>
-            <td>Web Design</td>
-            <td>07/29/2022</td>
-          </tr>
+          {transactions.map(transaction => {
+            return (
+              <tr key={transaction.id}>
+                <td >{transaction.title}</td>
+                <td className={transaction.type}>
+                  {
+                    new Intl.NumberFormat('en-US', {
+                      style: 'currency',
+                      currency: 'USD'
+                    }).format(transaction.amount)
+                  }
+                </td>
+                <td>{transaction.category}</td>
+                <td>
+                  {
+                    new Intl.DateTimeFormat('en-US').format(new Date(transaction.createdAt))
+                  }
+                </td>
+              </tr>
+            )
+          })}
         </tbody>
       </table>
     </Container>
