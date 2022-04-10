@@ -1,32 +1,54 @@
 import Modal from 'react-modal';
+import { FormEvent, useState } from 'react';
+
+
+/* styles */
 import { Container, RadioBox, TransactionTypeContainer } from './styles';
+
+/* assets */
 import depositImg from "../../assets/entradas.svg";
 import withdrawImg from "../../assets/saidas.svg";
 import closeImg from "../../assets/close.svg";
-import { FormEvent, useState } from 'react';
-import { api } from '../../services/app';
+
+/* hooks */
+import { useTransactions } from '../../hooks/useTransactions';
+
+
+
 interface NewTransactionModalProps {
   isOpen: boolean;
   onRequestClose: () => void;
 }
 
 export function NewTransactionModal({ isOpen, onRequestClose }: NewTransactionModalProps) {
+
+  const { createTransaction } = useTransactions();
+
   const [title, setTitle] = useState('');
   const [amount, setAmount] = useState(0);
   const [category, setCategory] = useState('');
   const [type, setType] = useState('deposit');
 
 
-  function handleCreateNewTransaction(event: FormEvent) {
+
+  async function handleCreateNewTransaction(event: FormEvent) {
     event.preventDefault(); // previne recarregamento da página Veritifcar tipagem do parametro no onSubmit, lá ele o diz o tipo esperado
-    const data = {
+
+    await createTransaction({
+
       title,
       amount,
-      category,
-      type
-    }
+      type,
+      category
 
-    api.post('/transactions', data)
+    });
+
+    setTitle('');
+    setAmount(0);
+    setCategory('');
+    setType('deposit');
+    onRequestClose();
+
   }
 
   return (

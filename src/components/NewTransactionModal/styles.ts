@@ -30,6 +30,20 @@ export const Container = styled.form`
       margin-top: 1rem;
     }
   }
+
+  
+  
+  input[type=number]::-webkit-inner-spin-button { 
+    -webkit-appearance: none;
+  }
+  input[type=number] { 
+    -moz-appearance: textfield;
+    appearance: textfield;
+  }
+
+
+
+
   button[type="submit"] {
     width: 100%;
     padding: 0 1.5rem;

@@ -8,6 +8,7 @@ import { Header } from './components/Header/index';
 import { Dashboard } from './components/Dashboard';
 import { TransactionTable } from './components/TransactionTable';
 import { NewTransactionModal } from './components/NewTransactionModal';
+import { TransactionProvider } from './hooks/useTransactions';
 
 /* Set modal 'child' ?  => Search() */
 Modal.setAppElement('#root');
@@ -24,7 +25,7 @@ export function App() {
   }
 
   return (
-    <>
+    <TransactionProvider>
       <Header handleOpenTransactionModal={handleOpenTransactionModal} />
       <Dashboard />
       <NewTransactionModal
@@ -33,6 +34,6 @@ export function App() {
       />
 
       <GlobalStyle />
-    </>
+    </TransactionProvider>
   );
 }
